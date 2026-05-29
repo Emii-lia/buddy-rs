@@ -1,0 +1,9 @@
+[Unit]
+Description=Buddy Observer Daemon
+
+[Service]
+ExecStart=%h/.cargo/bin/buddyd
+Restart=always
+
+[Install]
+WantedBy=default.target
