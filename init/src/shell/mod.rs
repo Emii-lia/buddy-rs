@@ -102,16 +102,16 @@ impl Shell {
         if fish_function.exists() {
           std::fs::remove_file(fish_function).expect("Failed to remove fish config");
         }
-        std::process::Command::new("functions")
-          .arg("-e")
-          .arg("buddy_preexec")
-          .output()
-          .expect("Failed to remove fish preexec config");
-        std::process::Command::new("functions")
-          .arg("-e")
-          .arg("buddy_postexec")
-          .output()
-          .expect("Failed to remove fish postexec config");
+        // std::process::Command::new("functions")
+        //   .arg("-e")
+        //   .arg("buddy_preexec")
+        //   .output()
+        //   .expect("Failed to remove fish preexec config");
+        // std::process::Command::new("functions")
+        //   .arg("-e")
+        //   .arg("buddy_postexec")
+        //   .output()
+        //   .expect("Failed to remove fish postexec config");
       }
       Shell::Bash => {
         println!("Uninstalling buddy bash config...");
