@@ -30,29 +30,20 @@ impl ReactionRule for FailedCommandRule {
   }
 }
 
-pub fn react_to_command(command_event: CommandEvent) {
+pub fn react_to_command(command_event: CommandEvent) -> Vec<String> {
+  let mut responses = Vec::new();
   let event = Event::Command(command_event);
   let build_rule = BuildRule;
   if build_rule.matches(&event) {
     if let Some(response) = build_rule.react(&event) {
-      println!("{}", response);
+      responses.push(response);
     }
   }
   let failed_command_rule = FailedCommandRule;
   if failed_command_rule.matches(&event) {
     if let Some(response) = failed_command_rule.react(&event) {
-      println!("{}", response);
+      responses.push(response);
     }
   }
-  println!("Command: {}, Exit Code: {}, Duration: {}ms",
-    match &event {
-      Event::Command(cmd) => &cmd.command,
-    },
-    match &event {
-      Event::Command(cmd) => cmd.exit_code,
-    },
-    match &event {
-      Event::Command(cmd) => cmd.duration_ms,
-    }
-  );
+  responses
 }

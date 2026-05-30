@@ -1,5 +1,5 @@
 use std::path::Path;
-use tokio::io::{AsyncBufReadExt, BufReader};
+use tokio::io::{AsyncBufReadExt, BufReader, AsyncWriteExt};
 use tokio::net::UnixListener;
 use shared::constant::SOCKET_PATH;
 use shared::types::{CommandEvent};
@@ -27,8 +27,11 @@ async fn main() -> anyhow::Result<()> {
                     Ok(_) => {
                         match serde_json::from_str::<CommandEvent>(&line.trim()) {
                             Ok(event) => {
-                                react_to_command(event);
-                                let _ = std::io::Write::flush(&mut std::io::stdout());
+                                let responses = react_to_command(event);
+                                for response in responses {
+                                    let _ = reader.get_mut().write_all(response.as_bytes()).await;
+                                    let _ = reader.get_mut().write_all(b"\n").await;
+                                }
                             }
                             Err(e) => {
                                 eprintln!("Failed to parse command event: {}", e);
