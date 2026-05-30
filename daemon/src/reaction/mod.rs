@@ -1,7 +1,10 @@
+use colored::*;
 use shared::types::{CommandEvent, Event};
+use crate::reaction::style::{style_icon, wrap_in_bubble};
 use crate::reaction::traits::ReactionRule;
 
 pub mod traits;
+pub mod style;
 
 pub struct BuildRule;
 pub struct FailedCommandRule;
@@ -14,9 +17,13 @@ impl ReactionRule for BuildRule {
   fn react(&self, event: &Event) -> Option<String> {
     let Event::Command(cmd) = event;
     if cmd.duration_ms > 10000 {
-      Some("Finally. After several identity crises, it compiled itself into submission.".to_string())
+      let msg = "Finally. After several identity crises, it compiled itself into submission.";
+      let buddy = format!("{} ( -_-)", style_icon("󱇬", Color::BrightYellow));
+      Some(wrap_in_bubble(msg, &buddy))
     } else {
-      Some("Done. Suspiciously quick. No complaints yet, which is worrying".to_string())
+      let msg = "Done. Suspiciously quick. No complaints yet, which is worrying";
+      let buddy = format!("{} (•‿•)", style_icon("󰄬", Color::BrightGreen));
+      Some(wrap_in_bubble(msg, &buddy))
     }
   }
 }
@@ -26,33 +33,26 @@ impl ReactionRule for FailedCommandRule {
     matches!(event, Event::Command(cmd) if cmd.exit_code != 0)
   }
   fn react(&self, event: &Event) -> Option<String> {
-    Some("It broke. As expected. Moving on emotionally.".to_string())
+    let msg = "It broke. As expected. Moving on emotionally.";
+    let buddy = format!("{} (╯°□°)╯", style_icon("", Color::BrightRed));
+    Some(wrap_in_bubble(msg, &buddy))
   }
 }
 
-pub fn react_to_command(command_event: CommandEvent) {
+pub fn react_to_command(command_event: CommandEvent) -> Vec<String> {
+  let mut responses = Vec::new();
   let event = Event::Command(command_event);
   let build_rule = BuildRule;
   if build_rule.matches(&event) {
     if let Some(response) = build_rule.react(&event) {
-      println!("{}", response);
+      responses.push(response);
     }
   }
   let failed_command_rule = FailedCommandRule;
   if failed_command_rule.matches(&event) {
     if let Some(response) = failed_command_rule.react(&event) {
-      println!("{}", response);
+      responses.push(response);
     }
   }
-  println!("Command: {}, Exit Code: {}, Duration: {}ms",
-    match &event {
-      Event::Command(cmd) => &cmd.command,
-    },
-    match &event {
-      Event::Command(cmd) => cmd.exit_code,
-    },
-    match &event {
-      Event::Command(cmd) => cmd.duration_ms,
-    }
-  );
+  responses
 }

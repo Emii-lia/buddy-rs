@@ -1,5 +1,6 @@
+use colored::*;
 use std::path::Path;
-use tokio::io::{AsyncBufReadExt, BufReader};
+use tokio::io::{AsyncBufReadExt, BufReader, AsyncWriteExt};
 use tokio::net::UnixListener;
 use shared::constant::SOCKET_PATH;
 use shared::types::{CommandEvent};
@@ -9,12 +10,13 @@ pub mod reaction;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
+    colored::control::set_override(true);
     if Path::new(SOCKET_PATH).exists() {
         std::fs::remove_file(SOCKET_PATH)?;
     }
 
     let listener = UnixListener::bind(SOCKET_PATH)?;
-    println!("Buddy daemon is listening...");
+    println!("{}", "Buddy daemon is listening...".green().bold());
     loop {
         let (stream, _) = listener.accept().await?;
         tokio::spawn(async move {
@@ -27,8 +29,11 @@ async fn main() -> anyhow::Result<()> {
                     Ok(_) => {
                         match serde_json::from_str::<CommandEvent>(&line.trim()) {
                             Ok(event) => {
-                                react_to_command(event);
-                                let _ = std::io::Write::flush(&mut std::io::stdout());
+                                let responses = react_to_command(event);
+                                for response in responses {
+                                    let _ = reader.get_mut().write_all(response.as_bytes()).await;
+                                    let _ = reader.get_mut().write_all(b"\n").await;
+                                }
                             }
                             Err(e) => {
                                 eprintln!("Failed to parse command event: {}", e);

@@ -15,11 +15,11 @@ precmd() {
   local end_time=$(date +%s%3N)
   local duration=$((end_time - BUDDY_START))
 
-  buddysh \
+  command buddysh \
     "$BUDDY_CMD" \
     "$exit_code" \
     "$duration" \
-    "$end_time" &
+    "$end_time"
 
   BUDDY_CMD=""
   BUDDY_START=0
