@@ -1,3 +1,4 @@
+use colored::*;
 use std::path::Path;
 use tokio::io::{AsyncBufReadExt, BufReader, AsyncWriteExt};
 use tokio::net::UnixListener;
@@ -9,12 +10,13 @@ pub mod reaction;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
+    colored::control::set_override(true);
     if Path::new(SOCKET_PATH).exists() {
         std::fs::remove_file(SOCKET_PATH)?;
     }
 
     let listener = UnixListener::bind(SOCKET_PATH)?;
-    println!("Buddy daemon is listening...");
+    println!("{}", "Buddy daemon is listening...".green().bold());
     loop {
         let (stream, _) = listener.accept().await?;
         tokio::spawn(async move {
