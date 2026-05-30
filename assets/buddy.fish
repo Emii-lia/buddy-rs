@@ -8,7 +8,7 @@ function buddy_postexec --on-event fish_postexec
   set -l end_time (date +%s%3N)
   set -l duration (math "$end_time - $BUDDY_START")
 
-  buddysh \
+  command buddysh \
     "$BUDDY_CMD" \
     "$exit_code" \
     "$duration" \

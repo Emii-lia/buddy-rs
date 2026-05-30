@@ -8,7 +8,7 @@ buddy_precmd() {
   local end_time=$(date +%s%3N)
   local duration=$((end_time - BUDDY_START))
 
-  buddysh \
+  command buddysh \
     "$BUDDY_CMD" \
     "$exit_code" \
     "$duration" \

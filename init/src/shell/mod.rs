@@ -29,8 +29,8 @@ impl Shell {
   pub fn is_installed(&self) -> bool {
     match self {
       Shell::Fish => {
-        let fish_function = home_dir().unwrap().join(".config/fish/functions/buddy.fish");
-        fish_function.exists()
+        let fish_conf = home_dir().unwrap().join(".config/fish/conf.d/buddy.fish");
+        fish_conf.exists()
       }
       Shell::Bash => {
         let bashrc = home_dir().unwrap().join(".bashrc");
@@ -56,40 +56,43 @@ impl Shell {
     match self {
       Shell::Fish => {
         println!("Installing fish config...");
-        let fish_function = home_dir().unwrap().join(".config/fish/functions/buddy.fish");
-        if !fish_function.exists() {
-          std::fs::create_dir_all(fish_function.parent().unwrap()).expect("Failed to create fish functions directory");
+        let fish_conf = home_dir().unwrap().join(".config/fish/conf.d/buddy.fish");
+        if !fish_conf.exists() {
+          std::fs::create_dir_all(fish_conf.parent().unwrap()).expect("Failed to create fish conf.d directory");
         }
-        std::fs::write(fish_function, config).expect("Failed to write fish config")
+        std::fs::write(fish_conf, config).expect("Failed to write fish config")
       }
       Shell::Bash => {
         println!("Installing bash config...");
         let bash_config = home_dir().unwrap().join(".config/buddy/buddy.bash");
         std::fs::write(bash_config, config).expect("Failed to write bash config");
 
-        let source_line = r#"
-        # >>> buddy >>>
-        [[ -f ~/.config/buddy/buddy.bash ]] &&
-        source  ~/.config/buddy/buddy.bash
-        # <<< buddy <<<
-        "#;
+        let source_line = "\n# >>> buddy >>>\n[[ -f ~/.config/buddy/buddy.bash ]] && source ~/.config/buddy/buddy.bash\n# <<< buddy <<<\n";
 
         let bashrc = home_dir().unwrap().join(".bashrc");
-        std::fs::write(bashrc, source_line).expect("Failed to write bash config")
+        let mut file = std::fs::OpenOptions::new()
+          .append(true)
+          .create(true)
+          .open(bashrc)
+          .expect("Failed to open bashrc");
+        use std::io::Write;
+        file.write_all(source_line.as_bytes()).expect("Failed to write to bashrc");
       }
       Shell::Zsh => {
         println!("Installing zsh config...");
         let zsh_config = home_dir().unwrap().join(".config/buddy/buddy.zsh");
         std::fs::write(zsh_config, config).expect("Failed to write zsh config");
-        let source_line = r#"
-        # >>> buddy >>>
-        [[ -f ~/.config/buddy/buddy.zsh ]] &&
-        source  ~/.config/buddy/buddy.zsh
-        # <<< buddy <<<
-        "#;
+
+        let source_line = "\n# >>> buddy >>>\n[[ -f ~/.config/buddy/buddy.zsh ]] && source ~/.config/buddy/buddy.zsh\n# <<< buddy <<<\n";
 
         let zshrc = home_dir().unwrap().join(".zshrc");
-        std::fs::write(zshrc, source_line).expect("Failed to write zsh config")
+        let mut file = std::fs::OpenOptions::new()
+          .append(true)
+          .create(true)
+          .open(zshrc)
+          .expect("Failed to open zshrc");
+        use std::io::Write;
+        file.write_all(source_line.as_bytes()).expect("Failed to write to zshrc");
       }
     }
   }
@@ -98,20 +101,14 @@ impl Shell {
     match self {
       Shell::Fish => {
         println!("Uninstalling buddy fish config...");
+        let fish_conf = home_dir().unwrap().join(".config/fish/conf.d/buddy.fish");
+        if fish_conf.exists() {
+          std::fs::remove_file(fish_conf).expect("Failed to remove fish config");
+        }
         let fish_function = home_dir().unwrap().join(".config/fish/functions/buddy.fish");
         if fish_function.exists() {
-          std::fs::remove_file(fish_function).expect("Failed to remove fish config");
+          std::fs::remove_file(fish_function).expect("Failed to remove legacy fish function");
         }
-        // std::process::Command::new("functions")
-        //   .arg("-e")
-        //   .arg("buddy_preexec")
-        //   .output()
-        //   .expect("Failed to remove fish preexec config");
-        // std::process::Command::new("functions")
-        //   .arg("-e")
-        //   .arg("buddy_postexec")
-        //   .output()
-        //   .expect("Failed to remove fish postexec config");
       }
       Shell::Bash => {
         println!("Uninstalling buddy bash config...");
