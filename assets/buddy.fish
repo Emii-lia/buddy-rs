@@ -12,5 +12,5 @@ function buddy_postexec --on-event fish_postexec
     "$BUDDY_CMD" \
     "$exit_code" \
     "$duration" \
-    "$end_time" &
+    "$end_time"
 end

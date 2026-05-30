@@ -12,7 +12,7 @@ buddy_precmd() {
     "$BUDDY_CMD" \
     "$exit_code" \
     "$duration" \
-    "$end_time" &
+    "$end_time"
 }
 
 trap buddy_preexec DEBUG

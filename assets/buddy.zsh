@@ -19,7 +19,7 @@ precmd() {
     "$BUDDY_CMD" \
     "$exit_code" \
     "$duration" \
-    "$end_time" &
+    "$end_time"
 
   BUDDY_CMD=""
   BUDDY_START=0
