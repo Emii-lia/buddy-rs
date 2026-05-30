@@ -1,40 +1,13 @@
 use colored::*;
 use shared::types::{CommandEvent, Event};
+use crate::reaction::style::{style_icon, wrap_in_bubble};
 use crate::reaction::traits::ReactionRule;
 
 pub mod traits;
+pub mod style;
 
 pub struct BuildRule;
 pub struct FailedCommandRule;
-
-fn style_icon(icon: &str, color: Color) -> String {
-    icon.color(color).bold().to_string()
-}
-
-fn style_message(msg: &str) -> String {
-    msg.italic().bright_white().to_string()
-}
-
-fn wrap_in_bubble(msg: &str, buddy: &str) -> String {
-    let lines: Vec<&str> = msg.split('\n').collect();
-    let max_len = lines.iter().map(|l| l.len()).max().unwrap_or(0);
-    let width = max_len + 2;
-
-    let mut bubble = String::new();
-    bubble.push_str(&format!("  {}\n", "─".repeat(width).bright_white()));
-    for line in lines {
-        let padding = " ".repeat(width - line.len() - 1);
-        bubble.push_str(&format!("  {} {} {} {}\n", 
-            "│".bright_white(), 
-            line.italic().bright_white(), 
-            padding.bright_white(),
-            "│".bright_white()
-        ));
-    }
-    bubble.push_str(&format!("  {}\n", "─".repeat(width).bright_white()));
-    bubble.push_str(&format!(" {} \n", buddy.bold()));
-    bubble
-}
 
 impl ReactionRule for BuildRule {
   fn matches(&self, event: &Event) -> bool {
