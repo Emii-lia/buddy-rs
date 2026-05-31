@@ -1,0 +1,24 @@
+use colored::Color;
+use shared::types::Event;
+use crate::reaction::style::{style_icon, wrap_in_bubble};
+use crate::reaction::traits::ReactionRule;
+
+pub struct BuildRule;
+impl ReactionRule for BuildRule {
+  fn matches(&self, event: &Event) -> bool {
+    matches!(event, Event::Command(cmd) if cmd.command.contains("build"))
+  }
+
+  fn react(&self, event: &Event) -> Option<String> {
+    let Event::Command(cmd) = event;
+    if cmd.duration_ms > 10000 {
+      let msg = "Finally. After several identity crises, it compiled itself into submission.";
+      let buddy = format!("{} (ಠ_ಠ)", style_icon("󱇬", Color::BrightYellow));
+      Some(wrap_in_bubble(msg, &buddy))
+    } else {
+      let msg = "Done. Suspiciously quick. No complaints yet, which is worrying";
+      let buddy = format!("{} (•‿•)", style_icon("󰄬", Color::BrightGreen));
+      Some(wrap_in_bubble(msg, &buddy))
+    }
+  }
+}
