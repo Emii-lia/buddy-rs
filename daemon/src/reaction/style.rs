@@ -11,10 +11,10 @@ pub fn style_message(msg: &str) -> String {
 pub fn wrap_in_bubble(msg: &str, buddy: &str) -> String {
   let lines: Vec<&str> = msg.split('\n').collect();
   let max_len = lines.iter().map(|l| l.len()).max().unwrap_or(0);
-  let width = max_len + 2;
+  let width = max_len + 1;
 
   let mut bubble = String::new();
-  bubble.push_str(&format!("  {}\n", "─".repeat(width).bright_white()));
+  bubble.push_str(&format!("  {}\n", "─".repeat(width + 3).bright_white()));
   for line in lines {
     let padding = " ".repeat(width - line.len() - 1);
     bubble.push_str(&format!("  {} {} {} {}\n",
@@ -24,7 +24,7 @@ pub fn wrap_in_bubble(msg: &str, buddy: &str) -> String {
                              "│".bright_white()
     ));
   }
-  bubble.push_str(&format!("  {}\n", "─".repeat(width).bright_white()));
+  bubble.push_str(&format!("  {}\n", "─".repeat(width + 3).bright_white()));
   bubble.push_str(&format!(" {} \n", buddy.bold()));
   bubble
 }

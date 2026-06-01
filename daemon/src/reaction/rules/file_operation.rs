@@ -1,0 +1,32 @@
+use shared::types::Event;
+use crate::reaction::style::wrap_in_bubble;
+use crate::reaction::traits::ReactionRule;
+
+pub struct FileOperationRule;
+
+impl ReactionRule for FileOperationRule {
+  fn matches(&self, event: &shared::types::Event) -> bool {
+    let fileops: &[&str] = &["touch", "mkdir", "rm", "mv", "cp", "ln", "rmdir"];
+    matches!(
+      event,
+      Event::Command(cmd) if fileops.iter().any(|op| cmd.command.contains(op))
+    )
+  }
+
+  fn react(&self, event: &Event) -> Option<String> {
+    let Event::Command(cmd) = event;
+    if ["rm", "rmdir"].iter().any(|op| cmd.command.contains(op)) {
+      let msg = "Deleting evidence";
+      let buddy = "(・_・;)";
+      Some(wrap_in_bubble(msg, buddy))
+    } else if ["mv", "cp", "ln"].iter().any(|op| cmd.command.contains(op)) {
+      let msg = "Everything is exactly where you left it. Probably.";
+      let buddy = "╮(╯_╰)╭";
+      Some(wrap_in_bubble(msg, buddy))
+    } else {
+      let msg = "New files created. Where? No idea.";
+      let buddy = "┐(˘_˘)┌";
+      Some(wrap_in_bubble(msg, buddy))
+    }
+  }
+}

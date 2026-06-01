@@ -22,10 +22,9 @@ impl ReactionRule for DevelopmentRule {
       "go",
       "gcc"
     ];
-    let Event::Command(cmd) = event;
     matches!(
       event,
-      Event::Command(cmd) if dev_commands.contains(&cmd.command.split_whitespace().next().unwrap())
+      Event::Command(cmd) if dev_commands.iter().any(|dev| cmd.command.contains(dev))
     )
   }
   fn react(&self, _event: &Event) -> Option<String> {
