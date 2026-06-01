@@ -22,7 +22,6 @@ impl ReactionRule for DevelopmentRule {
       "go",
       "gcc"
     ];
-    let Event::Command(cmd) = event;
     matches!(
       event,
       Event::Command(cmd) if dev_commands.iter().any(|dev| cmd.command.contains(dev))
