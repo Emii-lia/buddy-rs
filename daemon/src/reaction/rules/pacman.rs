@@ -19,7 +19,7 @@ impl ReactionRule for PackageManagerRule {
     matches!(event, Event::Command(cmd) if pacman_commands.contains(&cmd.command.split_whitespace().next().unwrap()))
   }
   fn react(&self, _event: &Event) -> Option<String> {
-    let buddy = "<⁠(⁠￣⁠︶⁠￣⁠)⁠>";
+    let buddy = "<( ￣ ︶ ￣ )>";
     let msg = "It succeeded. The consequences are scheduled later.";
     Some(format!("{} {}", msg, buddy))
   }

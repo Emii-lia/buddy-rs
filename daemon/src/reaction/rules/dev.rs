@@ -24,12 +24,12 @@ impl ReactionRule for DevelopmentRule {
     ];
     matches!(
       event,
-      Event::Command(cmd) if dev_commands.iter().any(|dev| cmd.command.contains(dev))
+      Event::Command(cmd) if dev_commands.contains(&cmd.command.split_whitespace().next().unwrap())
     )
   }
   fn react(&self, _event: &Event) -> Option<String> {
     let msg = "Yes, it works! Try not to touch it.";
-    let buddy = "(⁠o⁠_⁠O⁠)";
-    Some(wrap_in_bubble(msg, &buddy))
+    let buddy = "(o_O)";
+    Some(wrap_in_bubble(msg, buddy))
   }
 }

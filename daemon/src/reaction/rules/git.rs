@@ -11,6 +11,6 @@ impl ReactionRule for GitRule {
   fn react(&self, _event: &Event) -> Option<String> {
     let buddy = "(◠‿ o )";
     let msg = "Recording today's mistake for future reference.";
-    Some(wrap_in_bubble(msg, &buddy))
+    Some(wrap_in_bubble(msg, buddy))
   }
 }
