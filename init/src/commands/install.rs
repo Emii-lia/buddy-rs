@@ -1,3 +1,4 @@
+use shared::style::wrap_in_bubble;
 use crate::config::create_config;
 use crate::config::service::create_service;
 use crate::shell::detect::detect_shell;
@@ -8,8 +9,14 @@ pub fn install() -> anyhow::Result<(), anyhow::Error> {
   println!();
   println!("Creating buddy config...");
   create_config().map_err(|e| anyhow::anyhow!("Failed to create config: {}", e))?;
+  create_service().map_err(|e| anyhow::anyhow!("Failed to create service: {}", e))?;
   println!();
   shell.install();
-  create_service().map_err(|e| anyhow::anyhow!("Failed to create service: {}", e))?;
+  println!();
+  println!("Buddy installed!");
+  println!("{}", wrap_in_bubble(
+    "Buddy will now observe your actions",
+    "(｡•̀ᴗ-)✧"
+  ));
   Ok(())
 }

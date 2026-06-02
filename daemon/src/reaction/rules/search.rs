@@ -1,5 +1,5 @@
 use shared::types::Event;
-use crate::reaction::style::wrap_in_bubble;
+use shared::style::wrap_in_bubble;
 use crate::reaction::traits::ReactionRule;
 
 pub struct SearchRule;
@@ -24,7 +24,7 @@ impl ReactionRule for SearchRule {
     )
   }
 
-  fn react(&self, event: &Event) -> Option<String> {
+  fn react(&self, _event: &Event) -> Option<String> {
     let msg = "The answer was apparently nearby the entire time.";
     let buddy = "(ง'̀-'́)ง";
     Some(wrap_in_bubble(msg, buddy))

@@ -29,7 +29,7 @@ impl Shell {
   pub fn is_installed(&self) -> bool {
     match self {
       Shell::Fish => {
-        let fish_conf = home_dir().unwrap().join(".config/fish/conf.d/buddy.fish");
+        let fish_conf = home_dir().unwrap().join(".config/fish/functions/buddy.fish");
         fish_conf.exists()
       }
       Shell::Bash => {
@@ -56,7 +56,7 @@ impl Shell {
     match self {
       Shell::Fish => {
         println!("Installing fish config...");
-        let fish_conf = home_dir().unwrap().join(".config/fish/conf.d/buddy.fish");
+        let fish_conf = home_dir().unwrap().join(".config/fish/functions/buddy.fish");
         if !fish_conf.exists() {
           std::fs::create_dir_all(fish_conf.parent().unwrap()).expect("Failed to create fish conf.d directory");
         }
@@ -101,10 +101,6 @@ impl Shell {
     match self {
       Shell::Fish => {
         println!("Uninstalling buddy fish config...");
-        let fish_conf = home_dir().unwrap().join(".config/fish/conf.d/buddy.fish");
-        if fish_conf.exists() {
-          std::fs::remove_file(fish_conf).expect("Failed to remove fish config");
-        }
         let fish_function = home_dir().unwrap().join(".config/fish/functions/buddy.fish");
         if fish_function.exists() {
           std::fs::remove_file(fish_function).expect("Failed to remove legacy fish function");

@@ -1,6 +1,5 @@
-use colored::Color;
 use shared::types::Event;
-use crate::reaction::style::{style_icon, wrap_in_bubble};
+use shared::style::{wrap_in_bubble};
 use crate::reaction::traits::ReactionRule;
 
 pub struct FailedCommandRule;
@@ -10,7 +9,7 @@ impl ReactionRule for FailedCommandRule {
   }
   fn react(&self, _event: &Event) -> Option<String> {
     let msg = "It broke. As expected. Moving on emotionally.";
-    let buddy = format!("{} (╯°□°)╯", style_icon("", Color::BrightRed));
+    let buddy = "(╯°□°)╯";
     Some(wrap_in_bubble(msg, &buddy))
   }
 }

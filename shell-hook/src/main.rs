@@ -26,12 +26,15 @@ async fn main() -> anyhow::Result<()> {
     .unwrap_or(0);
 
   let event = CommandEvent {
-    command,
+    command: command.clone(),
     exit_code,
     duration_ms,
     timestamp,
   };
 
-  sender::send_event(event).await?;
+
+  if !command.starts_with("buddy") {
+    sender::send_event(event).await?;
+  }
   Ok(())
 }
