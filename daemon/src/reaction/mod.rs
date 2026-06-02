@@ -3,7 +3,6 @@ use crate::reaction::rules::{get_rules, FailedCommandRule};
 use crate::reaction::traits::ReactionRule;
 
 pub mod traits;
-pub mod style;
 pub mod rules;
 
 

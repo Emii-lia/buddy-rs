@@ -1,5 +1,5 @@
 use shared::types::Event;
-use crate::reaction::style::wrap_in_bubble;
+use shared::style::wrap_in_bubble;
 use crate::reaction::traits::ReactionRule;
 
 pub struct DevelopmentRule;
