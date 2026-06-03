@@ -2,13 +2,10 @@
 name = "init"
 version = "0.1.0"
 edition = "2024"
+publish = false
 
 [dependencies]
 clap = { version = "4.6.1", features = ["derive"] }
 anyhow = "1.0.102"
 regex = "1.12.3"
 shared = { path = "../shared" }
-
-[[bin]]
-name = "buddy"
-path = "src/main.rs"
