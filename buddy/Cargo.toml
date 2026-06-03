@@ -2,6 +2,13 @@
 name = "buddy-rs"
 version = "0.1.0"
 edition = "2024"
+authors = ["Fiaro fiaromiangaly@gmail.com"]
+keywords = ["buddy", "terminal", "shell", "tool", "productivity"]
+categories = ["command-line-utilities"]
+description = "Rust-based shell assistant that monitors your shell commands and provides reactions or feedback."
+repository = "https://github.com/Emii-lia/buddy-rs"
+homepage = "https://crates.io/crates/buddy-rs"
+license = "MIT"
 
 [dependencies]
 daemon = { path = "../daemon" }
@@ -10,3 +17,7 @@ shared = { path = "../shared" }
 shell-hook = { path = "../shell-hook" }
 anyhow = "1.0.102"
 tokio = { version = "1.52.3", features = ["full"]}
+
+[profile.release]
+opt-level = "z"
+lto = true
