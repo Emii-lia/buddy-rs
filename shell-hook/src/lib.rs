@@ -2,8 +2,7 @@ pub mod sender;
 
 use shared::types::CommandEvent;
 
-#[tokio::main]
-async fn main() -> anyhow::Result<()> {
+pub async fn run_shell_hook() -> anyhow::Result<()> {
   let args: Vec<String> = std::env::args().collect();
 
   let command = args
@@ -38,3 +37,5 @@ async fn main() -> anyhow::Result<()> {
   }
   Ok(())
 }
+
+fn main() {}
