@@ -31,10 +31,11 @@ buddy init
 
 ### Usage
 
-Three commands will be installed after the installation:
+Four commands will be installed after the installation:
 - `buddy` - to initialise or uninstall the hooks
 - `buddyd` - the buddy daemon that processes events
 - `buddysh` - the shell hook that captures command execution details
+- `buddy-rs` - buddy greeting
 
 Buddy will give you its feedback on some commands:
 - `build`: build commands
