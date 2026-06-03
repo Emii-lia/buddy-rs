@@ -7,7 +7,7 @@ pub mod shell;
 pub mod config;
 pub mod commands;
 
-fn main() -> anyhow::Result<()> {
+pub fn run_init() -> anyhow::Result<()> {
     let cli = Cli::parse();
 
     match cli.command {
@@ -27,3 +27,5 @@ fn main() -> anyhow::Result<()> {
 
     Ok(())
 }
+
+fn main() {}

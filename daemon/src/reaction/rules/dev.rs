@@ -20,7 +20,9 @@ impl ReactionRule for DevelopmentRule {
       "nvm",
       "gradle",
       "go",
-      "gcc"
+      "gcc",
+      "vite",
+      "next"
     ];
     matches!(
       event,

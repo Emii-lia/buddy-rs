@@ -3,7 +3,8 @@ members = [
     "daemon",
     "shell-hook",
     "shared",
-    "init"
+    "init",
+    "buddy"
 ]
 
 resolver = "2"
