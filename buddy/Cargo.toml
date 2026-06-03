@@ -17,7 +17,3 @@ shared = { path = "../shared" }
 shell-hook = { path = "../shell-hook" }
 anyhow = "1.0.102"
 tokio = { version = "1.52.3", features = ["full"]}
-
-[profile.release]
-opt-level = "z"
-lto = true
