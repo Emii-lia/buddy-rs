@@ -11,9 +11,9 @@ homepage = "https://crates.io/crates/buddy-rs"
 license = "MIT"
 
 [dependencies]
-daemon = { path = "../daemon" }
-init = { path = "../init" }
-shared = { path = "../shared" }
-shell-hook = { path = "../shell-hook" }
+daemon = { path = "../daemon", version = "0.1.0" }
+init = { path = "../init", version = "0.1.0" }
+shared = { path = "../shared", version = "0.1.0" }
+shell-hook = { path = "../shell-hook", version = "0.1.0" }
 anyhow = "1.0.102"
 tokio = { version = "1.52.3", features = ["full"]}
