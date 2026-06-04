@@ -1,3 +1,5 @@
+pub mod test;
+
 use crate::shared::types::Event;
 use crate::shared::style::{wrap_in_bubble};
 use crate::daemon::reaction::traits::ReactionRule;
@@ -9,7 +11,7 @@ impl ReactionRule for FailedCommandRule {
   }
   fn react(&self, _event: &Event) -> Option<String> {
     let msg = "It broke. As expected. Moving on emotionally.";
-    let buddy = "(╯°□°)╯";
+    let buddy = "(╯°□°）╯︵ ┻━┻";
     Some(wrap_in_bubble(msg, &buddy))
   }
 }

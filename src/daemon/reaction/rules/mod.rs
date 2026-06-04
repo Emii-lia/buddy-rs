@@ -15,7 +15,6 @@ use crate::daemon::reaction::rules::pacman::PackageManagerRule;
 use crate::daemon::reaction::rules::search::SearchRule;
 use crate::daemon::reaction::traits::ReactionRule;
 
-
 pub fn get_rules() -> Vec<Box<dyn ReactionRule>> {
   vec![
     Box::new(BuildRule),

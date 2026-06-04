@@ -1,3 +1,5 @@
+pub mod test;
+
 use crate::shared::types::Event;
 use crate::shared::style::wrap_in_bubble;
 use crate::daemon::reaction::traits::ReactionRule;
