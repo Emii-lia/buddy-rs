@@ -35,7 +35,7 @@ Four commands will be installed after the installation:
 - `buddy` - to initialise or uninstall the hooks
 - `buddyd` - the buddy daemon that processes events
 - `buddysh` - the shell hook that captures command execution details
-- `buddy-rs` - buddy greeting
+- `buddy-rs` - buddy greeting and initialiser
 
 Buddy will give you its feedback on some commands:
 - `build`: build commands
@@ -43,7 +43,7 @@ Buddy will give you its feedback on some commands:
 - `file-operation`: touch, mkdir, rm, mv, cp, ln, rmdir
 - `git`: git commands
 - `package-manager`: your system package manager commands
-- `search`: search, find, lookup, grep, ack, ag, rg, fd, locate.
+- `search`: find, lookup, grep, rg, fd, locate.
 - `fail`: any command that fails with a non-zero exit code.
 
 ### Uninstallation
