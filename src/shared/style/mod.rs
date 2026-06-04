@@ -28,3 +28,6 @@ pub fn wrap_in_bubble(msg: &str, buddy: &str) -> String {
   bubble.push_str(&format!(" {} \n", buddy.bold()));
   bubble
 }
+
+#[cfg(test)]
+mod test;

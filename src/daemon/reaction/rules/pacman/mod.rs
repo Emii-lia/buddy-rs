@@ -1,5 +1,8 @@
+pub mod test;
+
 use crate::shared::types::Event;
 use crate::daemon::reaction::traits::ReactionRule;
+use crate::shared::style::wrap_in_bubble;
 
 pub struct PackageManagerRule;
 
@@ -21,6 +24,6 @@ impl ReactionRule for PackageManagerRule {
   fn react(&self, _event: &Event) -> Option<String> {
     let buddy = "<( ￣ ︶ ￣ )>";
     let msg = "It succeeded. The consequences are scheduled later.";
-    Some(format!("{} {}", msg, buddy))
+    Some(wrap_in_bubble(msg, buddy))
   }
 }

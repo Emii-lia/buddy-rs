@@ -2,6 +2,8 @@ use std::env::home_dir;
 use regex::Regex;
 
 pub mod detect;
+#[cfg(test)]
+mod test;
 #[derive(Debug)]
 pub enum Shell {
   Fish,

@@ -1,3 +1,5 @@
+pub mod test;
+
 use crate::shared::types::Event;
 use crate::shared::style::wrap_in_bubble;
 use crate::daemon::reaction::traits::ReactionRule;
@@ -7,12 +9,9 @@ pub struct SearchRule;
 impl ReactionRule for SearchRule {
   fn matches(&self, event: &Event) -> bool {
     let search_commands: &[&'static str] = &[
-      "search",
       "find",
       "lookup",
       "grep",
-      "ag",
-      "ack",
       "rg",
       "fd",
       "locate"
