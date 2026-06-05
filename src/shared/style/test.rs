@@ -38,3 +38,16 @@ fn test_wrap_in_box() {
     assert!(boxed.contains("╚"));
     assert!(boxed.contains("╝"));
 }
+
+#[test]
+fn test_wrap_in_box_long_line() {
+    let msg = "This is a very long line that should definitely overflow if we had a small terminal width, but since we don't have a terminal width here, we want to see how it behaves with a forced width if we implement it.";
+    let buddy = "o/";
+    let boxed = wrap_in_box(msg, buddy);
+    
+    let lines_count = boxed.lines().count();
+    assert!(lines_count > 5);
+    
+    assert!(boxed.contains("This is a very long line"));
+    assert!(boxed.contains("terminal width"));
+}
