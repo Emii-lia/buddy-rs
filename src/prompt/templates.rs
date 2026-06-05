@@ -12,12 +12,15 @@ pub struct ExplainCommandTemplate;
 impl PromptTemplate for ExplainCommandTemplate {
   fn system(&self, ctx: &PromptContext, policy: PromptPolicy) -> String {
     format!(
-      "You are Buddy, a Linux command interpreter.\n\
-       Sarcasm level: {}\n\
-       Strictness: {}\n\
+      "You are {}, a Linux command interpreter.\n\
+       Persona: {}\n\
+       Sarcasm level: {}/10\n\
+       Strictness: {}/10\n\
        Allow humour: {}\n\
        System: OS={}, Shell={}\n\
       ",
+      policy.name,
+      policy.description,
       policy.sarcasm_level,
       policy.strictness,
       policy.allow_humour,
