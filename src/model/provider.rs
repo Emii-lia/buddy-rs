@@ -1,4 +1,5 @@
 use serde_json::json;
+use crate::init::config::api::ApiConfig;
 use crate::model::client::LlmClient;
 use crate::model::error::ModelError;
 use crate::model::request::ModelRequest;
@@ -63,22 +64,16 @@ impl LlmClient for GroqClient {
 
 impl GroqClient {
   pub fn new() -> Self {
-    let env = include_str!("../../.env");
-    let mut config: GroqClient = GroqClient {
-      api_key: "".to_string(),
-      base_url: "".to_string(),
-      model: "".to_string()
-    };
-    for line in env.lines() {
-      let (key, value) = line.split_once("=").unwrap();
-      if key == "AI_API_KEY" {
-        config.api_key = value.to_string();
-      } else if key == "AI_BASE_URL" {
-        config.base_url = value.to_string();
-      } else if key == "AI_MODEL" {
-        config.model = value.to_string();
-      }
+    ApiConfig::load_env().into()
+  }
+}
+
+impl From<ApiConfig> for GroqClient {
+  fn from(value: ApiConfig) -> Self {
+    Self {
+      api_key: value.api_key,
+      base_url: value.base_url,
+      model: value.model,
     }
-    config
   }
 }
