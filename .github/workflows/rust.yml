@@ -16,6 +16,10 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  BUDDY_API_KEY: ${{ secrets.BUDDY_API_KEY }}
+  BUDDY_BASE_URL: ${{ secrets.BUDDY_BASE_URL }}
+  BUDDY_MODEL: ${{ secrets.BUDDY_MODEL }}
+  APP_ENV: "ci"
 
 jobs:
   build:
