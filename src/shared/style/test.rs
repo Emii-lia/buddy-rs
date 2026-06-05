@@ -22,3 +22,19 @@ fn test_wrap_in_bubble_multiline() {
     assert!(bubble.contains("World"));
     assert!(bubble.contains("o/"));
 }
+
+#[test]
+fn test_wrap_in_box() {
+    let msg = "Hello";
+    let buddy = "o/";
+    let boxed = wrap_in_box(msg, buddy);
+    
+    assert!(boxed.contains("Hello"));
+    assert!(boxed.contains("o/"));
+    assert!(boxed.contains("║"));
+    assert!(boxed.contains("═"));
+    assert!(boxed.contains("╔"));
+    assert!(boxed.contains("╗"));
+    assert!(boxed.contains("╚"));
+    assert!(boxed.contains("╝"));
+}

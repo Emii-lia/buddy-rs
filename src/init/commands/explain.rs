@@ -6,6 +6,7 @@ use crate::prompt::context::{CommandInput, PromptContext, SystemContext};
 use crate::prompt::policies::PolicyType;
 use crate::prompt::templates::ExplainCommandTemplate;
 use crate::prompt::types::{PromptIntent, RiskLevel, Verbosity};
+use crate::shared::style::wrap_in_box;
 
 pub async  fn explain(command: &str) -> anyhow::Result<(), String> {
   let os: String = std::env::consts::OS.to_string();
@@ -33,6 +34,6 @@ pub async  fn explain(command: &str) -> anyhow::Result<(), String> {
     .await
     .map_err(|e| format!("Model error: {}", e))?;
   
-  println!("{}", response.text);
+  println!("{}", wrap_in_box(&response.text, "╭( ･ㅂ･)و ̑̑"));
   Ok(())
 }
