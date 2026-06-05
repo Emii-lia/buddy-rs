@@ -2,6 +2,7 @@ use clap::{Parser, Subcommand};
 
 pub mod install;
 pub mod uninstall;
+pub mod explain;
 
 #[derive(Subcommand)]
 pub enum Command {
@@ -18,6 +19,13 @@ pub enum Command {
         long_about = "Uninstalls buddy by removing the configuration files."
     )]
     Uninstall,
+    #[command(
+        name = "explain",
+        about = "Gives a brief explanation of the command",
+    )]
+    Explain{
+        command: String,
+    },
 }
 
 #[derive(Parser)]
