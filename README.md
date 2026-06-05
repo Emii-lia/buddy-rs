@@ -1,14 +1,13 @@
 # buddy-rs
 
-`buddy-rs` is a Rust-based shell assistant that monitors your shell commands and provides reactions or feedback. It consists of a daemon that processes events and a shell hook that captures command execution details.
-
+`buddy-rs` is a Rust-based cli tools that helps you through your Linux/macOS terminal journey. It provides a set of tools to enhance your command-line experience, including command explanations, feedback on command execution, and more.
 ## How It Works
 
 1.  **Installation**: When you run `buddy install`, it configures your shell to call `buddysh` after each command execution.
 2.  **Hooking**: Every time a command is executed in your shell, the hook (`buddysh`) captures the command data,
 3.  **Communication**: `buddysh` sends this data to the `buddyd` daemon via a Unix domain socket.
 4.  **Reaction**: The daemon processes the event and can provide feedback or perform actions based on the command result.
-
+5.  **Explanation**: ask buddy to explain a command for you.
 ## Getting Started
 
 ### Prerequisites
@@ -23,7 +22,13 @@ To install the buddy hooks into your shell:
 ```bash
 cargo install buddy-rs
 ```
-Then initialise buddy:
+Four commands will be installed after the installation:
+- `buddy` - to manage buddy (install, uninstall, explain)
+- `buddyd` - the buddy daemon that processes events
+- `buddysh` - the shell hook that captures command execution details
+- `buddy-rs` - buddy greeting and initialiser
+
+Then initialise buddy reaction:
 
 ```bash
 buddy init
@@ -31,11 +36,34 @@ buddy init
 
 ### Usage
 
-Four commands will be installed after the installation:
-- `buddy` - to initialise or uninstall the hooks
-- `buddyd` - the buddy daemon that processes events
-- `buddysh` - the shell hook that captures command execution details
-- `buddy-rs` - buddy greeting and initialiser
+
+#### Explain a command
+
+To use buddy explain feature, you need to configure the API first with:
+```bash
+buddy config init
+buddy config set BUDDY_API_KEY <your-api-key>
+```
+> Note: You can get your API key from [here](https://console.groq.com/keys). 
+
+Then you can use the `buddy explain` command to get a brief explanation of a command:
+```bash
+buddy explain "ls -la"
+```
+You can also specify an assistant to give you the explanation:
+```bash
+buddy explain "rm -rf /" --assistant gremlin
+```
+
+Available assistants:
+- `buddy` (default): A bro, a buddy, a friend who gives casual, laid-back explanations with a good dose of sarcasm and humour.
+- `boss`: A strict, straightforward boss who gives concise, no-nonsense explanations.
+- `mochi`: A helpful, gentle close friend who provides clear explanations with a touch of humour.
+- `mrbruno`: A math teacher who is known for his ability to explain complex concepts in a clear and funny way.
+- `gremlin`: A mischievous gremlin who loves to cause chaos and confusion.
+- `spock`: A logical and precise Vulcan who provides clear, concise explanations.
+
+### Feedback on command execution
 
 Buddy will give you its feedback on some commands:
 - `build`: build commands

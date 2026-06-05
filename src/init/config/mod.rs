@@ -1,4 +1,5 @@
 pub mod service;
+pub mod api;
 
 use std::env::home_dir;
 
