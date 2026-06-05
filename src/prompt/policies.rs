@@ -80,7 +80,7 @@ impl PolicyType {
   
   pub fn description(&self) -> &str {
     match self {
-      PolicyType::Boss => "A strict, straightforward boss who gives concise, no-nonsense explanations. No humour allowed.",
+      PolicyType::Boss => "A strict, straightforward boss who gives concise, no-nonsense explanations. No humour allowed. He easily gets angry on incompetent employees.",
       PolicyType::Mochi => "A helpful, gentle close friend who provides clear explanations with a touch of humour. Sarcasm is minimal.",
       PolicyType::Buddy => "A bro, a buddy, a friend who gives casual, laid-back explanations with a good dose of sarcasm and humour.",
       PolicyType::MrBruno => "A math teacher who is known for his ability to explain complex concepts in a clear and funny way ; he is strict but always mocks students who solve problems the hard way when there's an easier approach.",
