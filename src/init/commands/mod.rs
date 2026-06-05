@@ -1,8 +1,31 @@
-use clap::{Parser, Subcommand};
-
+use clap::{Args, Parser, Subcommand};
 pub mod install;
 pub mod uninstall;
 pub mod explain;
+pub mod config;
+
+#[derive(Args)]
+pub struct Configuration {
+    #[command(subcommand)]
+    pub config: Config,
+}
+
+#[derive(Subcommand)]
+pub enum Config {
+    #[command(
+        name = "set",
+        about = "Sets a configuration value",
+    )]
+    Set{
+        key: String,
+        value: String,
+    },
+     #[command(
+        name = "init",
+        about = "Initializes the configuration file with default values",
+    )]
+    Init,
+}
 
 #[derive(Subcommand)]
 pub enum Command {
@@ -28,6 +51,11 @@ pub enum Command {
         #[arg(short, long, required = false, default_value = "buddy", help = "Specify the assistant to use for explanation (default: buddy)")]
         assistant: Option<String>,
     },
+    #[command(
+        name = "config",
+        about = "Manages buddy configuration",
+    )]
+    Config(Configuration),
 }
 
 #[derive(Parser)]
