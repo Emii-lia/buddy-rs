@@ -68,7 +68,6 @@ impl PolicyType {
     }
   }
   pub fn buddy(&self) -> &str {
-    //TODO buddy emoji for each policy type
     match self {
       PolicyType::Boss => "(｀Д´)ゞ",
       PolicyType::Mochi => "(｡◕‿◕｡)",
