@@ -8,10 +8,11 @@ use crate::prompt::templates::ExplainCommandTemplate;
 use crate::prompt::types::{PromptIntent, RiskLevel, Verbosity};
 use crate::shared::style::wrap_in_box;
 
-pub async  fn explain(command: &str) -> anyhow::Result<(), String> {
+pub async  fn explain(command: &str, assistant: Option<String>) -> anyhow::Result<(), String> {
   let os: String = std::env::consts::OS.to_string();
   let shell: String = std::env::var("SHELL").unwrap_or_else(|_| "unknown".to_string());
-
+  let policy_str = assistant.unwrap_or_else(|| "buddy".to_string());
+  let policy = PolicyType::from(policy_str);
   let ctx = PromptContext {
     system: SystemContext { os, shell, cwd: None },
     intent: PromptIntent::ExplainCommand,
@@ -25,15 +26,17 @@ pub async  fn explain(command: &str) -> anyhow::Result<(), String> {
   };
 
   let prompt = PromptBuilder::new(ctx)
-    .policy(PolicyType::Buddy.to_policy())
+    .policy(policy.to_policy())
     .build(ExplainCommandTemplate);
 
   let request = ModelRequest::from(prompt);
   let groq = GroqClient::new();
+  let buddy = policy.buddy();
+
   let response = groq.generate(request)
     .await
     .map_err(|e| format!("Model error: {}", e))?;
   
-  println!("{}", wrap_in_box(&response.text, "╭( ･ㅂ･)و ̑̑"));
+  println!("{}", wrap_in_box(&response.text, buddy));
   Ok(())
 }

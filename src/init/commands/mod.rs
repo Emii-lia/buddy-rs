@@ -25,6 +25,8 @@ pub enum Command {
     )]
     Explain{
         command: String,
+        #[arg(short, long, required = false, default_value = "buddy", help = "Specify the assistant to use for explanation (default: buddy)")]
+        assistant: Option<String>,
     },
 }
 

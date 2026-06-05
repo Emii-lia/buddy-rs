@@ -24,8 +24,8 @@ pub async  fn run_init() -> anyhow::Result<()> {
                 std::process::exit(1);
             });
         }
-        Command::Explain { command } => {
-          explain(&command).await.unwrap_or_else(|e| {
+        Command::Explain { command, assistant } => {
+          explain(&command, assistant).await.unwrap_or_else(|e| {
             eprintln!("Error during explanation: {}", e);
             std::process::exit(1);
           });
