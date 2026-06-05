@@ -38,7 +38,15 @@ buddy init
 
 
 #### Explain a command
-You can ask buddy to explain a command for you using:
+
+To use buddy explain feature, you need to configure the API first with:
+```bash
+buddy config init
+buddy config set BUDDY_API_KEY <your-api-key>
+```
+> Note: You can get your API key from [here](https://console.groq.com/keys). 
+
+Then you can use the `buddy explain` command to get a brief explanation of a command:
 ```bash
 buddy explain "ls -la"
 ```
