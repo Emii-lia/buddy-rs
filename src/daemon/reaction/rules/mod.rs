@@ -5,6 +5,7 @@ mod pacman;
 pub mod git;
 pub mod file_operation;
 pub mod search;
+pub mod sudo;
 
 pub use fail::FailedCommandRule;
 pub use build::BuildRule;
@@ -13,6 +14,7 @@ use crate::daemon::reaction::rules::file_operation::FileOperationRule;
 use crate::daemon::reaction::rules::git::GitRule;
 use crate::daemon::reaction::rules::pacman::PackageManagerRule;
 use crate::daemon::reaction::rules::search::SearchRule;
+use crate::daemon::reaction::rules::sudo::SudoRule;
 use crate::daemon::reaction::traits::ReactionRule;
 
 pub fn get_rules() -> Vec<Box<dyn ReactionRule>> {
@@ -23,5 +25,6 @@ pub fn get_rules() -> Vec<Box<dyn ReactionRule>> {
     Box::new(GitRule),
     Box::new(FileOperationRule),
     Box::new(SearchRule),
+    Box::new(SudoRule),
   ]
 }
