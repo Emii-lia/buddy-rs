@@ -8,13 +8,14 @@ pub struct SudoRule;
 
 impl ReactionRule for SudoRule {
   fn matches(&self, event: &Event) -> bool {
+    let sudos: &[&str] = &["sudo", "please"];
     matches!(
       event,
-      Event::Command(cmd) if cmd.command.contains("sudo") || cmd.command.contains("please")
+      Event::Command(cmd) if sudos.contains(&cmd.command.split_whitespace().next().unwrap())
     )
   }
 
-  fn react(&self, event: &Event) -> Option<String> {
+  fn react(&self, _event: &Event) -> Option<String> {
     let msg = "Root has entered the chat. Everyone is nervous.";
     let buddy = "(⚆_⚆)";
     // let buddy = "(¬_◔)";
