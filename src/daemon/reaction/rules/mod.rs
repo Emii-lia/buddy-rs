@@ -6,10 +6,12 @@ pub mod git;
 pub mod file_operation;
 pub mod search;
 pub mod sudo;
+pub mod danger;
 
 pub use fail::FailedCommandRule;
 pub use build::BuildRule;
 pub use dev::DevelopmentRule;
+use crate::daemon::reaction::rules::danger::DangerRule;
 use crate::daemon::reaction::rules::file_operation::FileOperationRule;
 use crate::daemon::reaction::rules::git::GitRule;
 use crate::daemon::reaction::rules::pacman::PackageManagerRule;
@@ -26,5 +28,6 @@ pub fn get_rules() -> Vec<Box<dyn ReactionRule>> {
     Box::new(FileOperationRule),
     Box::new(SearchRule),
     Box::new(SudoRule),
+    Box::new(DangerRule),
   ]
 }

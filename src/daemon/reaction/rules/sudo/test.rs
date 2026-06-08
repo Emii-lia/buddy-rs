@@ -21,7 +21,8 @@ fn test_sudo_reaction() {
   let response = super::SudoRule.react(&event);
   assert!(response.is_some());
   assert!(response.clone().unwrap().contains("Root has entered the chat"));
-  assert!(response.unwrap().contains("(⚆_⚆)"));
+  // assert!(response.unwrap().contains("(⚆_⚆)"));
+  assert!(response.unwrap().contains("(¬_◔)"));
 }
 
 #[test]

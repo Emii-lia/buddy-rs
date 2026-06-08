@@ -17,8 +17,8 @@ impl ReactionRule for SudoRule {
 
   fn react(&self, _event: &Event) -> Option<String> {
     let msg = "Root has entered the chat. Everyone is nervous.";
-    let buddy = "(⚆_⚆)";
-    // let buddy = "(¬_◔)";
+    // let buddy = "(⚆_⚆)";
+    let buddy = "(¬_◔)";
     Some(wrap_in_bubble(msg, buddy))
   }
 }
