@@ -5,7 +5,6 @@ use crate::shared::types::Event;
 
 #[test]
 fn test_pacman_rule_matches() {
-  let rule = PackageManagerRule;
   let commands: &[&str] = &[
     "pacman -Syu",
     "yay -Syu",
@@ -19,28 +18,26 @@ fn test_pacman_rule_matches() {
 
   for cmd in commands {
     let event = Event::new_command(cmd.to_string());
-    assert!(rule.matches(&event), "Should match '{}'", cmd);
+    assert!(PackageManagerRule.matches(&event), "Should match '{}'", cmd);
   }
 }
 
 #[test]
 fn test_pacman_reaction() {
-  let rule = PackageManagerRule;
   let event = Event::new_command("pacman -Syu".to_string());
-  assert!(rule.react(&event).is_some());
-  assert!(rule.react(&event).unwrap().contains("It succeeded"));
-  assert!(rule.react(&event).unwrap().contains("<( ￣ ︶ ￣ )>"));
+  assert!(PackageManagerRule.react(&event).is_some());
+  assert!(PackageManagerRule.react(&event).unwrap().contains("It succeeded"));
+  assert!(PackageManagerRule.react(&event).unwrap().contains("<( ￣ ︶ ￣ )>"));
 }
 
 #[test]
 fn test_pacman_failed_reaction() {
-  let rule = PackageManagerRule;
   let failed_rule = FailedCommandRule;
 
   let event = Event::new_command("pacman -Syu".to_string())
     .with_exit_code(1);
 
-  assert!(rule.react(&event).is_some());
+  assert!(PackageManagerRule.react(&event).is_some());
   assert!(failed_rule.matches(&event));
   assert!(failed_rule.react(&event).is_some());
   assert!(failed_rule.react(&event).unwrap().contains("It broke"));
