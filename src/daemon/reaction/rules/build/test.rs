@@ -1,6 +1,6 @@
 use crate::daemon::reaction::rules::{FailedCommandRule};
 use crate::daemon::reaction::traits::ReactionRule;
-use crate::shared::types::{CommandEvent, Event};
+use crate::shared::types::{Event};
 
 #[test]
 fn test_build_rule_matches() {
