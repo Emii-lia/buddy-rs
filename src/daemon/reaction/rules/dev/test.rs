@@ -1,6 +1,6 @@
-use crate::daemon::reaction::rules::{DevelopmentRule, FailedCommandRule};
+use crate::daemon::reaction::rules::{FailedCommandRule};
 use crate::daemon::reaction::traits::ReactionRule;
-use crate::shared::types::{CommandEvent, Event};
+use crate::shared::types::{Event};
 
 #[test]
 fn test_dev_rule_matches() {
@@ -22,31 +22,28 @@ fn test_dev_rule_matches() {
     "vite init",
     "next dev"
   ];
-  let rule = DevelopmentRule;
   for cmd in commands {
     let event = Event::new_command(cmd.to_string());
-    assert!(rule.matches(&event), "Should match '{}'", cmd);
+    assert!(super::DevelopmentRule.matches(&event), "Should match '{}'", cmd);
   }
 }
 
 #[test]
 fn test_dev_reaction() {
-  let rule = DevelopmentRule;
   let event = Event::new_command("cargo check".to_string());
-  let response = rule.react(&event);
-  assert!(rule.react(&event).is_some());
-  assert!(rule.react(&event).unwrap().contains("Yes, it works!"));
-  assert!(rule.react(&event).unwrap().contains("(o_O)"));
+  let response = super::DevelopmentRule.react(&event);
+  assert!(response.is_some());
+  assert!(response.clone().unwrap().contains("Yes, it works!"));
+  assert!(response.unwrap().contains("(o_O)"));
 }
 
 #[test]
 fn test_failed_dev_reaction() {
-  let rule = DevelopmentRule;
   let failed_rule = FailedCommandRule;
   let event = Event::new_command("cargo check".to_string())
     .with_exit_code(1);
 
-  assert!(rule.react(&event).is_some());
+  assert!(super::DevelopmentRule.react(&event).is_some());
   assert!(failed_rule.matches(&event));
   assert!(failed_rule.react(&event).is_some());
   assert!(failed_rule.react(&event).unwrap().contains("It broke"));
