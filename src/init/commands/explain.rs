@@ -1,5 +1,6 @@
+use crate::init::config::api::ApiConfig;
 use crate::model::client::LlmClient;
-use crate::model::provider::GroqClient;
+use crate::model::provider::{build_client};
 use crate::model::request::ModelRequest;
 use crate::prompt::builder::PromptBuilder;
 use crate::prompt::context::{CommandInput, PromptContext, SystemContext};
@@ -30,10 +31,10 @@ pub async  fn explain(command: &str, assistant: Option<String>) -> anyhow::Resul
     .build(ExplainCommandTemplate);
 
   let request = ModelRequest::from(prompt);
-  let groq = GroqClient::new();
+  let client = build_client(&ApiConfig::load_env());
   let buddy = policy.buddy();
 
-  let response = groq.generate(request)
+  let response = client.generate(request)
     .await
     .map_err(|e| format!("Model error: {}", e))?;
   

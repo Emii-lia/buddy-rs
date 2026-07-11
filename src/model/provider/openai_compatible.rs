@@ -1,18 +1,17 @@
 use serde_json::json;
-use crate::init::config::api::ApiConfig;
 use crate::model::client::LlmClient;
 use crate::model::error::ModelError;
 use crate::model::request::ModelRequest;
 use crate::model::response::ModelResponse;
 
-pub struct GroqClient {
+pub struct OpenAICompatibleClient {
   pub api_key: String,
   pub base_url: String,
   pub model: String,
 }
 
 #[async_trait::async_trait]
-impl LlmClient for GroqClient {
+impl LlmClient for OpenAICompatibleClient {
   async fn generate(&self, req: ModelRequest) -> anyhow::Result<ModelResponse, ModelError> {
     let payload = json!({
       "model": self.model,
@@ -30,7 +29,6 @@ impl LlmClient for GroqClient {
       "max_tokens": req.max_tokens,
     });
 
-
     let res = reqwest::Client::new()
       .post(&self.base_url)
       .bearer_auth(&self.api_key)
@@ -38,13 +36,11 @@ impl LlmClient for GroqClient {
       .send()
       .await?;
 
-
     if !res.status().is_success() {
       return Err(ModelError::Network(format!("API error: {}", res.status())));
     }
 
     let json: serde_json::Value = res.json().await?;
-
     let text = json["choices"][0]["message"]["content"]
       .as_str()
       .ok_or(ModelError::InvalidResponse)?
@@ -59,21 +55,5 @@ impl LlmClient for GroqClient {
       raw: json.to_string(),
       finish_reason,
     })
-  }
-}
-
-impl GroqClient {
-  pub fn new() -> Self {
-    ApiConfig::load_env().into()
-  }
-}
-
-impl From<ApiConfig> for GroqClient {
-  fn from(value: ApiConfig) -> Self {
-    Self {
-      api_key: value.api_key,
-      base_url: value.base_url,
-      model: value.model,
-    }
   }
 }
