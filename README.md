@@ -42,9 +42,18 @@ buddy init
 To use buddy explain feature, you need to configure the API first with:
 ```bash
 buddy config init
+buddy config set BUDDY_PROVIDER <groq|openai|anthropic>
 buddy config set BUDDY_API_KEY <your-api-key>
 ```
-> Note: You can get your API key from [here](https://console.groq.com/keys). 
+> Note: You can get your API key from [groq](https://console.groq.com/keys) or [openai](https://platform.openai.com/account/api-keys) or [anthropic](https://platform.claude.com/settings/workspaces/default/keys). 
+
+The `base url` and `model` is set by default from the `BUDDY_PROVIDER` environment variable. You can change them with:
+```bash
+buddy config set BUDDY_BASE_URL <your-base-url>
+```
+```bash
+buddy config set BUDDY_MODEL <your-model>
+```
 
 Then you can use the `buddy explain` command to get a brief explanation of a command:
 ```bash
