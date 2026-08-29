@@ -41,7 +41,7 @@ pub fn wrap_in_box(msg: &str, buddy: &str) -> String {
     }
 
     let mut current_line = String::new();
-    for word in line.trim().split_whitespace() {
+    for word in line.split_whitespace() {
       if current_line.is_empty() {
         current_line.push_str(word);
       } else if current_line.len() + word.len() <= content_width {

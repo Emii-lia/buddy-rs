@@ -1,4 +1,5 @@
 use std::env::home_dir;
+use std::fmt::{Display, Formatter};
 use regex::Regex;
 
 pub mod detect;
@@ -12,13 +13,6 @@ pub enum Shell {
 }
 
 impl Shell {
-  pub fn to_string(&self) -> String {
-    match self {
-      Shell::Fish => "fish",
-      Shell::Bash => "bash",
-      Shell::Zsh => "zsh"
-    }.to_string()
-  }
 
   pub fn load_config(&self) -> &'static str {
     match self {
@@ -124,6 +118,16 @@ impl Shell {
         let new_content = re.replace_all(&zshrc_content, "").to_string();
         std::fs::write(zshrc, new_content).expect("Failed to write zshrc");
       }
+    }
+  }
+}
+
+impl Display for Shell {
+  fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+    match self {
+      Shell::Fish => write!(f, "fish"),
+      Shell::Bash => write!(f, "bash"),
+      Shell::Zsh => write!(f, "zsh")
     }
   }
 }

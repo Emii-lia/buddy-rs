@@ -51,5 +51,3 @@ pub async  fn run_init() -> anyhow::Result<()> {
 
     Ok(())
 }
-
-fn main() {}

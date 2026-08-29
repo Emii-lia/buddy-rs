@@ -1,5 +1,4 @@
 use crate::init::config::api::ApiConfig;
-use crate::model::client::LlmClient;
 use crate::model::provider::{build_client};
 use crate::model::request::ModelRequest;
 use crate::prompt::builder::PromptBuilder;

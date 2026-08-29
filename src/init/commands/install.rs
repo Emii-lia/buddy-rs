@@ -5,7 +5,7 @@ use crate::init::shell::detect::detect_shell;
 
 pub fn install() -> anyhow::Result<(), anyhow::Error> {
   let shell = detect_shell().map_err(|e| anyhow::anyhow!("Failed to detect shell: {}", e))?;
-  println!("Detected shell: {}", shell.to_string());
+  println!("Detected shell: {}", shell);
   println!();
   println!("Creating buddy config...");
   create_config().map_err(|e| anyhow::anyhow!("Failed to create config: {}", e))?;

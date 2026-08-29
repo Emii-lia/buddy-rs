@@ -1,1 +1,1 @@
-pub const SOCKET_PATH: &'static str = "/tmp/buddy-rs.sock";
+pub const SOCKET_PATH: &str = "/tmp/buddy-rs.sock";

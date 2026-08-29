@@ -24,8 +24,8 @@ pub async fn run_daemon() -> anyhow::Result<()> {
             loop {
                 line.clear();
                 match reader.read_line(&mut line).await {
-                    Ok(bytes) if bytes == 0 => break,
-                    Ok(_) => match serde_json::from_str::<CommandEvent>(&line.trim()) {
+                    Ok(0) => break,
+                    Ok(_) => match serde_json::from_str::<CommandEvent>(line.trim()) {
                         Ok(event) => {
                             let responses = react_to_command(event);
                             for response in responses {
@@ -46,4 +46,3 @@ pub async fn run_daemon() -> anyhow::Result<()> {
         }); 
     }
 }
-fn main() {}
