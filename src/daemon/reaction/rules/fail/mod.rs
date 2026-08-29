@@ -12,6 +12,6 @@ impl ReactionRule for FailedCommandRule {
   fn react(&self, _event: &Event) -> Option<String> {
     let msg = "It broke. As expected. Moving on emotionally.";
     let buddy = "(╯°□°）╯︵ ┻━┻";
-    Some(wrap_in_bubble(msg, &buddy))
+    Some(wrap_in_bubble(msg, buddy))
   }
 }

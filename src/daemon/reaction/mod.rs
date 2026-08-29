@@ -17,10 +17,8 @@ pub fn react_to_command(command_event: CommandEvent) -> Vec<String> {
     }
   } else {
     for rule in rules {
-      if rule.matches(&event) {
-        if let Some(response) = rule.react(&event) {
-          responses.push(response);
-        }
+      if rule.matches(&event) && let Some(response) = rule.react(&event) {
+        responses.push(response);
       }
     }
   }

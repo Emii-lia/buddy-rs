@@ -37,5 +37,3 @@ pub async fn run_shell_hook() -> anyhow::Result<()> {
   }
   Ok(())
 }
-
-fn main() {}

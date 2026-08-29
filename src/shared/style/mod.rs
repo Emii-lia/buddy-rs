@@ -30,8 +30,8 @@ pub fn wrap_in_bubble(msg: &str, buddy: &str) -> String {
 }
 
 pub fn wrap_in_box(msg: &str, buddy: &str) -> String {
-  let max_width = 80;
-  let content_width = max_width - 6;
+  let max_width = 60;
+  let content_width = max_width - 2;
 
   let mut wrapped_lines = Vec::new();
   for line in msg.split('\n') {
@@ -44,7 +44,7 @@ pub fn wrap_in_box(msg: &str, buddy: &str) -> String {
     for word in line.split_whitespace() {
       if current_line.is_empty() {
         current_line.push_str(word);
-      } else if current_line.len() + 1 + word.len() <= content_width {
+      } else if current_line.len() + word.len() <= content_width {
         current_line.push(' ');
         current_line.push_str(word);
       } else {
@@ -62,7 +62,7 @@ pub fn wrap_in_box(msg: &str, buddy: &str) -> String {
   boxed.push_str(&format!("  ╔{}╗\n", "═".repeat(width).bright_white()));
   for line in wrapped_lines {
     let padding = " ".repeat(width - line.len() - 1);
-    boxed.push_str(&format!("  ║ {}{}║\n",
+    boxed.push_str(&format!("    {}{}\n",
                              line.bright_white(),
                              padding
     ));

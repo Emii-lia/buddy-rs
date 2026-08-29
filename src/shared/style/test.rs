@@ -31,7 +31,6 @@ fn test_wrap_in_box() {
     
     assert!(boxed.contains("Hello"));
     assert!(boxed.contains("o/"));
-    assert!(boxed.contains("║"));
     assert!(boxed.contains("═"));
     assert!(boxed.contains("╔"));
     assert!(boxed.contains("╗"));
