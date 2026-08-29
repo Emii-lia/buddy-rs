@@ -35,7 +35,7 @@ impl LlmProvider {
 
   pub fn default_model(&self) -> &'static str {
     match self {
-      LlmProvider::Groq => "llama-3.3-70b-versatile",
+      LlmProvider::Groq => "openai/gpt-oss-120b",
       LlmProvider::OpenAI => "gpt-4o-mini",
       LlmProvider::Anthropic => "claude-sonnet-4-5",
     }
