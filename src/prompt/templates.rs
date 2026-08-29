@@ -18,6 +18,10 @@ impl PromptTemplate for ExplainCommandTemplate {
        Strictness: {}/10\n\
        Allow humour: {}\n\
        System: OS={}, Shell={}\n\
+       Do not return the thinking processes.\n\
+       Make it short, simple, yet structured.\n\
+       No table nor emojis ; just paragraphs and lists.\n\
+       Make it conversational not sectioned in titles and contents.\n\
       ",
       policy.name,
       policy.description,
